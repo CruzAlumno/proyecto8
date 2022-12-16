@@ -3,11 +3,11 @@
 @section('content')
     <article class="row">
         <header>
-            <h1>Edit Blablacar Page {{ $id }}</h1>
+            <h1>Edit Blablacar Page {{ $producto['id'] }}</h1>
         </header>
         <div class="card">
             <div class="card-body" style="padding:30px">
-                <form action="{{ url('/productos/edit') . $id }}" method="GET">
+                <form action="{{ url('/productos/edit') . $producto['id'] }}" method="GET">
                     @csrf
                     <div class="form-group">
                         <label for="titulo">Título</label>
@@ -15,11 +15,11 @@
                     </div>
                     <div class="form-group">
                         <label for="fecha-viaje">Fecha Viaje</label>
-                        <input type="date" name="fecha-viaje" id="fecha-viaje" class="form-control" value="{{ $producto['fecha_viaje'] }}">
+                        <input type="date" name="fecha-viaje" id="fecha-viaje" class="form-control" value="{{ $producto['fecha_inicio_viaje'] }}">
                     </div>
                     <div class="form-group">
                         <label for="hora-viaje">Hora Viaje</label>
-                        <input type="time" name="hora-viaje" id="hora-viaje" class="form-control" value="{{ $producto['hora_viaje'] }}">
+                        <input type="time" name="hora-viaje" id="hora-viaje" class="form-control" value="{{ $producto['hora_inicio_viaje'] }}">
                     </div>
                     <div class="form-group">
                         <label for="descripcion">Descripcion</label>
@@ -33,14 +33,19 @@
                         <label for="destino-ruta">Destino de Ruta</label>
                         <input type="text" name="destino-ruta" id="destino-ruta" class="form-control" value="{{ $producto['destino_ruta'] }}">
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="plazas">Plazas Disponibles</label>
                         <input type="number" name="plazas" id="plazas" class="form-control" style="width: 25%;" value="{{ $producto['plazas'] }}">
-                    </div>
+                    </div> --}}
                     <div class="form-group">
                         <label for="allow-desvios">Se Admiten Desvios (si/no)</label>
-                        <input type="radio" name="allow-desvios" id="allow-desvios" checked value='true'>
-                        <input type="radio" name="allow-desvios" id="allow-desvios" value='false'>
+                        @if($producto['allow_desvios'])
+                            <input type="radio" name="allow-desvios" id="allow-desvios" value='true' checked>
+                            <input type="radio" name="allow-desvios" id="allow-desvios" value='false'>
+                        @else
+                            <input type="radio" name="allow-desvios" id="allow-desvios" value='true'>
+                            <input type="radio" name="allow-desvios" id="allow-desvios" value='false' checked>
+                        @endif
                     </div>
                     <div class="form-group text-center">
                         <button type="submit" class="btn btn-primary" style="padding:8px 100px;margin-top:25px;">Añadir Post</button>
