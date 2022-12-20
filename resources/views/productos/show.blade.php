@@ -14,6 +14,7 @@
             <li>Post ID: {{ $producto['id'] }}</li>
             <li>Titulo: {{ $producto['titulo'] }}</li>
             <li>Descripcion: {{ $producto['descripcion'] }}</li>
+            <li>Id Vehiculo (Remplazar Plazas): {{ $producto['vehiculo_id'] }}</li>
             <li>Fecha del Viaje: {{ $producto['fecha_inicio_viaje'] }}</li>
             <li>Hora del Viaje: {{ $producto['hora_inicio_viaje'] }}</li>
             <li>Inicio de la Ruta: {{ $producto['inicio_ruta'] }}</li>

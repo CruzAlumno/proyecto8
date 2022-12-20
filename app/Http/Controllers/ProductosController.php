@@ -36,7 +36,7 @@ class ProductosController extends Controller {
         $producto_model->descripcion = $request->input('descripcion');
         $producto_model->inicio_ruta = $request->input('inicio-ruta');
         $producto_model->destino_ruta = $request->input('destino-ruta');
-        $producto_model->plazas_disponibles = $request->input('plazas');
+        //$producto_model->plazas_disponibles = $request->input('plazas'); Update -- "Trigger"
         $producto_model->allow_desvios = $request->input('allow-desvios');
         // Guardar cambios del Objecto en la DB:
         $producto_model->save();
@@ -54,7 +54,7 @@ class ProductosController extends Controller {
         $producto_model->descripcion = $request->input('descripcion');
         $producto_model->inicio_ruta = $request->input('inicio-ruta');
         $producto_model->destino_ruta = $request->input('destino-ruta');
-        $producto_model->plazas_disponibles = $request->input('plazas');
+        //$producto_model->plazas_disponibles = $request->input('plazas');
         $producto_model->allow_desvios = $request->input('allow-desvios');
         $producto_model->status_active = $request->input('status-post');
         // Guardar cambios del Objecto en la DB:
