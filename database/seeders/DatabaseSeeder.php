@@ -2,6 +2,9 @@
 
 namespace Database\Seeders;
 use Illuminate\Database\Seeder;
+// Import Dependencias para la FK:
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 // Import Models:
 use App\Models\User;
 use App\Models\Usuario_perfile;
@@ -15,6 +18,9 @@ class DatabaseSeeder extends Seeder {
      * @return void
      */
     public function run() {
+        // Avoid FK Errors:
+        Model::unguard();
+        Schema::disableForeignKeyConstraints();
         // Invocar Seeds:
         self::seedAdministrador();
         self::seedUsuarios_perfiles();
@@ -22,6 +28,9 @@ class DatabaseSeeder extends Seeder {
         self::seedProductos();
         // MSG:
         $this->command->info('Tabla inicializada con datos correctamente!');
+        // Reguard:
+        Model::reguard();
+        Schema::enableForeignKeyConstraints();
         // Util Randomizar Datos:
         // \App\Models\User::factory(10)->create();
     }
@@ -67,7 +76,6 @@ class DatabaseSeeder extends Seeder {
             $modelo->status_active = $producto['status_active'];
             $modelo->allow_desvios = $producto['allow_desvios'];
             $modelo->estimacion_llegada = $producto['estimacion_hora_llegada'];
-            $modelo->plazas_disponibles = $producto['plazas'];
             // Sin el Save No hacemos Nada en la DB:
             $modelo->save();
         }

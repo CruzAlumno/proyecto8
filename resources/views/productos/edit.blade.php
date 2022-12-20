@@ -7,7 +7,7 @@
         </header>
         <div class="card">
             <div class="card-body" style="padding:30px">
-                <form action="{{ url('/productos/edit') . $producto['id'] }}" method="POST">
+                <form action="{{ url('/productos/edit') . '/' . $producto['id'] }}" method="POST">
                     {{-- Especificar Tipo de Metodo Put (Sino la Ruta Put No Funcionara) --}}
                     {{ method_field('put') }}
                     @csrf

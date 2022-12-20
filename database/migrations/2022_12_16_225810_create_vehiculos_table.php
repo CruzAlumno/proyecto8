@@ -15,14 +15,15 @@ class CreateVehiculosTable extends Migration {
             // Primary Key:
             $table->id();
             // Foreign Key Constrain:
-            //$table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('usuario_perfiles');
             // Normal Data:
             $table->string('matricula', 7)->unique();
             $table->string('combustible', 12);
             $table->text('modelo');
             $table->integer('potencia_cv');
             $table->float('motor', 3, 2);
-            $table->integer('plazas');
+            $table->integer('plazas')->default(3);
             $table->date('matriculacion_fecha');
             // Default Creation TimeStamps:
             $table->timestamps();
@@ -36,5 +37,10 @@ class CreateVehiculosTable extends Migration {
      */
     public function down() {
         Schema::dropIfExists('vehiculos');
+        // Drop FK:
+        Schema::table('vehiculos', function(Blueprint $table) {
+            $table->dropForeign('usuario_perfiles_user_id_foreign');
+            $table->dropColumn('user_id');
+        });
     }
 }

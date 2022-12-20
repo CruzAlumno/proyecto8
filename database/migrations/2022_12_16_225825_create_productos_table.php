@@ -15,14 +15,13 @@ class CreateProductosTable extends Migration {
             // Primary Key:
             $table->id();
             // Foreign Key Constrain:
-            // $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            // $table->foreignId('vehiculo_id')->constrained()->onDelete('cascade');
+            $table->bigInteger('vehiculo_id')->unsigned()->nullable();
+            $table->foreign('vehiculo_id')->references('id')->on('vehiculos');
             // Normal Data:
             $table->string('titulo', 24);
             $table->string('descripcion', 300);
             $table->string('inicio_ruta', 64);
             $table->string('destino_ruta', 64);
-            $table->integer('plazas_disponibles');
             $table->string('fecha_inicio_viaje'); // Date Daba Problemas con el Formato del input date HTML.
             $table->time('hora_inicio_viaje');
             $table->dateTime('estimacion_llegada')->nullable();
@@ -42,5 +41,10 @@ class CreateProductosTable extends Migration {
      */
     public function down() {
         Schema::dropIfExists('productos');
+        // Drop FK:
+        Schema::table('productos', function(Blueprint $table) {
+            $table->dropForeign('vehiculos_vehiculo_id_foreign');
+            $table->dropColumn('vehiculo_id');
+        });
     }
 }

@@ -21,6 +21,10 @@
     <main role="main" class="container-fluid">
         <!-- Header -->
         @include('partials.header')
+        <!-- Nav -->
+        @if(Auth::check())
+            @include('partials.menu')
+        @endif
         <!-- Principal Content -->
         <section class="row main-content-container">
             @yield('content')
