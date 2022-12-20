@@ -7,7 +7,9 @@
         </header>
         <div class="card">
             <div class="card-body" style="padding:30px">
-                <form action="{{ url('/productos/edit') . $producto['id'] }}" method="GET">
+                <form action="{{ url('/productos/edit') . $producto['id'] }}" method="POST">
+                    {{-- Especificar Tipo de Metodo Put (Sino la Ruta Put No Funcionara) --}}
+                    {{ method_field('put') }}
                     @csrf
                     <div class="form-group">
                         <label for="titulo">Título</label>
@@ -33,22 +35,32 @@
                         <label for="destino-ruta">Destino de Ruta</label>
                         <input type="text" name="destino-ruta" id="destino-ruta" class="form-control" value="{{ $producto['destino_ruta'] }}">
                     </div>
-                    {{-- <div class="form-group">
+                    <div class="form-group">
                         <label for="plazas">Plazas Disponibles</label>
                         <input type="number" name="plazas" id="plazas" class="form-control" style="width: 25%;" value="{{ $producto['plazas'] }}">
-                    </div> --}}
+                    </div>
                     <div class="form-group">
                         <label for="allow-desvios">Se Admiten Desvios (si/no)</label>
                         @if($producto['allow_desvios'])
-                            <input type="radio" name="allow-desvios" id="allow-desvios" value='true' checked>
-                            <input type="radio" name="allow-desvios" id="allow-desvios" value='false'>
+                            <input type="radio" name="allow-desvios"  value='1' checked>
+                            <input type="radio" name="allow-desvios"  value='0'>
                         @else
-                            <input type="radio" name="allow-desvios" id="allow-desvios" value='true'>
-                            <input type="radio" name="allow-desvios" id="allow-desvios" value='false' checked>
+                            <input type="radio" name="allow-desvios"  value='1'>
+                            <input type="radio" name="allow-desvios"  value='0' checked>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="allow-desvios">Status del Post (Activo/Inactivo)</label>
+                        @if($producto['status_active'])
+                            <input type="radio" name="status-post"  value='1' checked>
+                            <input type="radio" name="status-post"  value='0'>
+                        @else
+                            <input type="radio" name="status-post"  value='1'>
+                            <input type="radio" name="status-post"  value='0' checked>
                         @endif
                     </div>
                     <div class="form-group text-center">
-                        <button type="submit" class="btn btn-primary" style="padding:8px 100px;margin-top:25px;">Añadir Post</button>
+                        <button type="submit" class="btn btn-primary" style="padding:8px 100px;margin-top:25px;">Save Changes</button>
                     </div>
                 </form>
             </div>

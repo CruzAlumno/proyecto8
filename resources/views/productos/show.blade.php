@@ -6,7 +6,7 @@
             <h1>Show Page {{ $producto['titulo'] }}</h1>
         </header>
         <ul style="margin-left: 15px;">
-            @if($producto['status_active'] == 'true')
+            @if($producto['status_active'] == '1')
             <li>Post Activo</li>
             @else
             <li>Post Inactivo</li>

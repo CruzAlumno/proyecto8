@@ -26,6 +26,43 @@ class ProductosController extends Controller {
         $producto = Producto::findOrFail($id);
         return view('productos.edit', [ 'producto' => $producto ]);
     }
+    public function postStore(Request $request) {
+        // Instanciacion del Model:
+        $producto_model = new Producto();
+        // Almacenar Datos Recogidos del Formulario:
+        $producto_model->titulo = $request->input('titulo');
+        $producto_model->fecha_inicio_viaje = $request->input('fecha-viaje');
+        $producto_model->hora_inicio_viaje = $request->input('hora-viaje');
+        $producto_model->descripcion = $request->input('descripcion');
+        $producto_model->inicio_ruta = $request->input('inicio-ruta');
+        $producto_model->destino_ruta = $request->input('destino-ruta');
+        $producto_model->plazas_disponibles = $request->input('plazas');
+        $producto_model->allow_desvios = $request->input('allow-desvios');
+        // Guardar cambios del Objecto en la DB:
+        $producto_model->save();
+        // Redireccion Al Nuevo Elemento:
+        $url = action([ProductosController::class, 'getShow'], ['id' => $producto_model->id]);
+        return redirect($url);
+    }
+    public function postEdit(Request $request, $id) {
+        // Modificar Producto Concreto:
+        $producto_model = Producto::findOrFail($id);
+        // Almacenar Datos Recogidos del Formulario:
+        $producto_model->titulo = $request->input('titulo');
+        $producto_model->fecha_inicio_viaje = $request->input('fecha-viaje');
+        $producto_model->hora_inicio_viaje = $request->input('hora-viaje');
+        $producto_model->descripcion = $request->input('descripcion');
+        $producto_model->inicio_ruta = $request->input('inicio-ruta');
+        $producto_model->destino_ruta = $request->input('destino-ruta');
+        $producto_model->plazas_disponibles = $request->input('plazas');
+        $producto_model->allow_desvios = $request->input('allow-desvios');
+        $producto_model->status_active = $request->input('status-post');
+        // Guardar cambios del Objecto en la DB:
+        $producto_model->save();
+        // Redireccion Al Nuevo Elemento Modificado:
+        $url = action([ProductosController::class, 'getShow'], ['id' => $producto_model->id]);
+        return redirect($url);
+    }
     // ------------------------- Almacenamiento de Datos Temporal (Variable Encapsulada) --- Trasladado a la DB con Migraciones y Seeder.
     // private $array_productos = [
     //     // Key, en el ForEach sera = 0, 1, 2 .. Posicion de Arrays Dentro del Array
