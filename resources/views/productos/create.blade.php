@@ -7,7 +7,7 @@
         </header>
         <div class="card">
             <div class="card-body" style="padding:30px">
-                <form action="{{ url('/productos/create') }}" method="GET">
+                <form action="{{ url('/productos/create') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="titulo">Título</label>
@@ -39,8 +39,8 @@
                     </div>
                     <div class="form-group">
                         <label for="allow-desvios">Se Admiten Desvios (si/no)</label>
-                        <input type="radio" name="allow-desvios" id="allow-desvios" checked value='true'>
-                        <input type="radio" name="allow-desvios" id="allow-desvios" value='false'>
+                        <input type="radio" name="allow-desvios" id="allow-desvios" checked value='1'>
+                        <input type="radio" name="allow-desvios" id="allow-desvios" value='0'>
                     </div>
                     <div class="form-group text-center">
                         <button type="submit" class="btn btn-primary" style="padding:8px 100px;margin-top:25px;">Añadir Post</button>

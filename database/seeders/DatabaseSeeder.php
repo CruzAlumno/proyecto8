@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 // Import Models:
+use App\Models\User;
 use App\Models\Usuario_perfile;
 use App\Models\Vehiculo;
 use App\Models\Producto;
@@ -15,6 +16,7 @@ class DatabaseSeeder extends Seeder {
      */
     public function run() {
         // Invocar Seeds:
+        self::seedAdministrador();
         self::seedUsuarios_perfiles();
         self::seedVehiculos();
         self::seedProductos();
@@ -24,6 +26,18 @@ class DatabaseSeeder extends Seeder {
         // \App\Models\User::factory(10)->create();
     }
     // Seeders Para las Migraciones:
+    private static function seedAdministrador() {
+        // Empty Table:
+        User::truncate();
+        // Instanciacion del Model:
+        $user_admin = new User();
+        // Fill Data -- From '.env' o el Valor por Defecto especificado:
+        $user_admin->name = env('ADMIN_NAME', 'admin');
+        $user_admin->email = env('ADMIN_EMAIL', 'devengvengg@gmail.com');
+        $user_admin->password = bcrypt(env('ADMIN_PASSWORD', 'Alumno17'));
+        // Save Data Object into DB:
+        $user_admin->save();
+    }
     private static function seedUsuarios_perfiles() {
         // Limpieza de Tabla por si hubiera algo:
         Usuario_perfile::truncate();
@@ -53,11 +67,12 @@ class DatabaseSeeder extends Seeder {
             $modelo->status_active = $producto['status_active'];
             $modelo->allow_desvios = $producto['allow_desvios'];
             $modelo->estimacion_llegada = $producto['estimacion_hora_llegada'];
+            $modelo->plazas_disponibles = $producto['plazas'];
             // Sin el Save No hacemos Nada en la DB:
             $modelo->save();
         }
     }
-    // Default Test Data:
+    // -------------------------- Default Test Data:
     private static $array_productos = [
         // Key, en el ForEach sera = 0, 1, 2 .. Posicion de Arrays Dentro del Array
         [

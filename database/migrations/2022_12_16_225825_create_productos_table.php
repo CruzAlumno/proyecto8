@@ -22,9 +22,10 @@ class CreateProductosTable extends Migration {
             $table->string('descripcion', 300);
             $table->string('inicio_ruta', 64);
             $table->string('destino_ruta', 64);
-            $table->date('fecha_inicio_viaje');
+            $table->integer('plazas_disponibles');
+            $table->string('fecha_inicio_viaje'); // Date Daba Problemas con el Formato del input date HTML.
             $table->time('hora_inicio_viaje');
-            $table->dateTime('estimacion_llegada');
+            $table->dateTime('estimacion_llegada')->nullable();
             $table->float('distancia', 8, 2)->default(0);
             $table->float('precio', 8, 2)->default(0);
             $table->boolean('status_active')->default(true);
