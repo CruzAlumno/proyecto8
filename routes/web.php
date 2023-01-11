@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 
 // ------------------------------------- @ My Routes:
 
-Route::get('/', [HomeController::class, 'getHome']);
+Route::get('/home', [HomeController::class, 'getHome']);
 Route::prefix('productos')->group(function() {
     // Se Acceden con el Prefijo  '/productos/...'
     Route::get('/', [ProductosController::class, 'getIndex']);
@@ -32,9 +32,8 @@ Route::prefix('productos')->group(function() {
     });
 });
 
-// ------------------------- Breeze Auth Dependencies:
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// -------------------- API Dependencies:
+Route::get('/', function () {
+    return ['Laravel' => app()->version()];
+});
 require __DIR__.'/auth.php';
