@@ -37,6 +37,13 @@ Route::any('/{any}', function (ServerRequestInterface $request) {
     //return $response;
 
     // React:
-    $records = json_decode($response->getBody()->getContents())->records;
-    return response()->json($records, 200, $headers = ['X-Total-Count' => count($records)]);
+    //$records = json_decode($response->getBody()->getContents())->records;
+    //return response()->json($records, 200, $headers = ['X-Total-Count' => count($records)]);
+
+    // React Con Edit y Add:
+    try {
+        $records = json_decode($response->getBody()->getContents())->records;
+        $response = response()->json($records, 200, $headers = ['X-Total-Count' => count($records)]);
+    } catch (\Throwable $th) {}
+    return $response;
 })->where('any', '.*');
