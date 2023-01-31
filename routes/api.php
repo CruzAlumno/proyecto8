@@ -9,6 +9,9 @@ use Tqdev\PhpCrudApi\Config\Config;
 // Import Customer Controller:
 use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\UserController;
+// Import API Externa Controller:
+use App\Http\Controllers\API\EcomapController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +30,8 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 // --------------------- Customers API Dependencies:
 Route::apiResource('customers', CustomerController::class);
 Route::apiResource('users', UserController::class);
+// --------------------- API Externa Here Maps:
+Route::get('ecomaps', [EcomapController::class, 'index']);
 // --------------------- PHP CRUD API Dependencies:
 Route::any('/{any}', function (ServerRequestInterface $request) {
     $config = new Config([

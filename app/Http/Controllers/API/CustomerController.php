@@ -15,8 +15,18 @@ class CustomerController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
-        return CustomerResource::collection(Customer::paginate());
+    public function index(Request $request) {
+        // Paginacion Controlada por Middleware:
+        $num_elementos = $request->input('numElements');
+        // SEARCH BAR:  (La 'q' es porque lo inidicamos asi en el Cliente)
+        $busqueda = $request->input('filter');
+        $registros_custumers =
+            $busqueda && array_key_exists('q', $busqueda)
+            ? Customer::where('first_name', 'like', '%' . $busqueda['q'] . '%')
+                ->paginate($num_elementos)
+            : Customer::paginate($num_elementos);
+        return CustomerResource::collection($registros_custumers);
+        //return CustomerResource::collection(Customer::paginate());
     }
 
     /**
