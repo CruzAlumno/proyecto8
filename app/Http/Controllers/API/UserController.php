@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,24 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index() {
+    public function index(Request $request) {
+        // Paginacion Controlada por Middleware:
+        $num_elementos = $request->input('numElements');
+        // Busqueda Avanzada + Paginacion:
+        $busqueda = $request->input('filter');
+        $busqueda_keys = [
+            'name',
+            'email'
+        ];
+        // Abre Consulta Vacia:
+        $registros = User::query();
+        if($busqueda && array_key_exists('q', $busqueda)) {
+            foreach($busqueda_keys as $value) {
+                $registros = $registros->orwhere($value, 'like', '%' . $busqueda['q'] . '%');
+            }
+        }
         // Mostrar Listado usuarios:
-        return UserResource::collection(User::paginate());
+        return UserResource::collection($registros->paginate($num_elementos));
     }
 
     /**
