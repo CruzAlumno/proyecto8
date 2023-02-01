@@ -11,6 +11,8 @@ use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\UserController;
 // Import API Externa Controller:
 use App\Http\Controllers\API\EcomapController;
+// Import Token Controller:
+use App\Http\Controllers\API\TokenController;
 
 
 /*
@@ -32,6 +34,17 @@ Route::apiResource('customers', CustomerController::class);
 Route::apiResource('users', UserController::class);
 // --------------------- API Externa Here Maps:
 Route::get('ecomaps', [EcomapController::class, 'index']);
+// --------------------- Auth Token Dependencies:
+// emite un nuevo token
+Route::post('tokens', [TokenController::class, 'store']);
+// elimina el token del usuario autenticado
+Route::delete('tokens', [TokenController::class, 'destroy'])->middleware('auth:sanctum');
+// Proteccion Rutas:
+Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+    $user = $request->user();
+    $user->fullName = $user->name;
+    return $user;
+});
 // --------------------- PHP CRUD API Dependencies:
 Route::any('/{any}', function (ServerRequestInterface $request) {
     $config = new Config([
