@@ -29,8 +29,8 @@ use App\Http\Controllers\API\TokenController;
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
-// --------------------- Customers API Dependencies:
-Route::apiResource('customers', CustomerController::class);
+// --------------------- Customers API Dependencies + Autorization Gates / Policies:
+Route::apiResource('customers', CustomerController::class)->middleware('auth:sanctum');
 Route::apiResource('users', UserController::class);
 // --------------------- API Externa Here Maps:
 Route::get('ecomaps', [EcomapController::class, 'index']);
