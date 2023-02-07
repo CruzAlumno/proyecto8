@@ -12,9 +12,25 @@ class CustomerResource extends JsonResource {
      */
     public function toArray($request) {
         //return parent::toArray($request);
+
+        // return [
+        //     'id' => $this->id,
+        //     'attributes' => parent::toArray($request)
+        // ];
+
+        // Relacion 1:1 Inversa
         return [
             'id' => $this->id,
-            'attributes' => parent::toArray($request)
+            'attributes' => [
+                'first_name' => $this->first_name,
+                'last_name' => $this->last_name,
+                'job_title' => $this->job_title,
+                'city' => $this->city,
+                'country' => $this->country,
+                'user_id' => $this->user_id,
+                'user' => new UserResource($this->user),
+                'blablacars' => BlablacarResource::collection($this->blablacars)
+            ]
         ];
     }
 }
