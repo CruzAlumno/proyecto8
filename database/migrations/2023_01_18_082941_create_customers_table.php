@@ -11,18 +11,22 @@ class CreateCustomersTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::create('customers', function (Blueprint $table) {
-            $table->id();
+            // Data:
+            $table->unsignedBigInteger('user_id');
             $table->string('first_name', 50);
             $table->string('last_name', 50)->nullable();
-            $table->string('job_title')->nullable();
-            $table->string('city')->default('Cartagena');
+            $table->string('city')->nullable();
             $table->string('country')->default('Spain');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('telefono', 12);
+            $table->date('fecha_nacimiento')->nullable();
+            $table->string('dni', 9)->unique();
             $table->timestamps();
+            // Foreign Key:
+            $table->foreign('user_id')->references('id')->on('users');
+            // Primary Key:
+            $table->id();
         });
     }
 

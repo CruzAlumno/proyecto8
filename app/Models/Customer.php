@@ -13,9 +13,11 @@ class Customer extends Model {
         'user_id',
         'first_name',
         'last_name',
-        'job_title',
         'city',
-        'country'
+        'country',
+        'telefono',
+        'fecha_nacimiento',
+        'dni'
     ];
     /**
     * Devuelve el usuario asociado a un customer.

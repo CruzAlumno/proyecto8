@@ -18,19 +18,9 @@ class UserController extends Controller
     public function index(Request $request) {
         // Paginacion Controlada por Middleware:
         $num_elementos = $request->input('numElements');
-        // Busqueda Avanzada + Paginacion:
-        $busqueda = $request->input('filter');
-        $busqueda_keys = [
-            'name',
-            'email'
-        ];
-        // Abre Consulta Vacia:
-        $registros = User::query();
-        if($busqueda && array_key_exists('q', $busqueda)) {
-            foreach($busqueda_keys as $value) {
-                $registros = $registros->orwhere($value, 'like', '%' . $busqueda['q'] . '%');
-            }
-        }
+        // Busqueda Avanzada + Paginacion + Helper:
+        $busqueda_keys = ['name', 'email'];
+        $registros = searchByField($busqueda_keys, User::class);
         // Mostrar Listado usuarios:
         return UserResource::collection($registros->paginate($num_elementos));
     }

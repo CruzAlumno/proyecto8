@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 // Import Models:
 use App\Models\User;
-use App\Models\Usuario_perfile;
+use App\Models\Customer;
+use App\Models\Role;
+use App\Models\Blablacar;
 use App\Models\Vehiculo;
-use App\Models\Producto;
+
 
 class DatabaseSeeder extends Seeder {
     /**
@@ -23,14 +25,16 @@ class DatabaseSeeder extends Seeder {
         Schema::disableForeignKeyConstraints();
         // Invocar Seeds:
         self::seedAdministrador();
-        self::seedUsuarios_perfiles();
+        self::seedCustomers();
         self::seedVehiculos();
-        self::seedProductos();
+        self::seedBlablacars();
+        self::seedRoles();
         // MSG:
         $this->command->info('Tabla inicializada con datos correctamente!');
         // Reguard:
         Model::reguard();
         Schema::enableForeignKeyConstraints();
+
         // Util Randomizar Datos:
         // \App\Models\User::factory(10)->create();
     }
@@ -47,59 +51,70 @@ class DatabaseSeeder extends Seeder {
         // Save Data Object into DB:
         $user_admin->save();
     }
-    private static function seedUsuarios_perfiles() {
-        // Limpieza de Tabla por si hubiera algo:
-        Usuario_perfile::truncate();
-        // Datos Array:
+    private static function seedRoles() {
+        // Empty Table:
+        Role::truncate();
+        // Fill Data:  (Creacion Directa)
+        Role::create(['name' => 'Administrador']);
+        Role::create(['name' => 'User']);
+    }
+    private static function seedCustomers() {
+        // Empty Table::
+        Customer::truncate();
+        // Instanciacion del Model:
+        $customer = new Customer();
+        // Fill Data:
+        $customer->user_id = '1';
+        $customer->first_name = 'Denis';
+        $customer->last_name = 'Catruna';
+        $customer->city = 'Murcia';
+        $customer->country = 'Spain';
+        $customer->telefono = '662468091';
+        $customer->fecha_nacimiento = '2000-02-17';
+        $customer->dni = 'XXXXXXXXX';
+        // Save Into DataBase:
+        $customer->save();
     }
     private static function seedVehiculos() {
-        // Limpieza de Tabla por si hubiera algo:
+        // Empty Table:
         Vehiculo::truncate();
-        // Datos Array:
+        // Instanciacion del Model:
+        $vehiculo = new Vehiculo();
+        // Fill Data:
+        $vehiculo->customer_id = '1';
+        $vehiculo->combustible = 'gasolina';
+        $vehiculo->fecha_matriculacion = '2007';
+        $vehiculo->modelo = 'Volkswagen Golf 6';
+        $vehiculo->potencia_cv = 140;
+        $vehiculo->plazas = 5;
+        $vehiculo->puertas = 5;
+        $vehiculo->consumo_medio = 7.2;
+        $vehiculo->matricula = '0000XXX';
+        // Save Into DataBase:
+        $vehiculo->save();
     }
-    private static function seedProductos() {
-        // Limpieza de Tabla por si hubiera algo:
-        Producto::truncate();
-        // Datos Array:
-        foreach(self::$array_productos as $producto) {
-            // Instanciar Modelo ORM controlador:
-            $modelo = new Producto();
-            // Rellenar con Data del Array:
-            $modelo->titulo = $producto['titulo'];
-            $modelo->descripcion = $producto['descripcion'];
-            $modelo->fecha_inicio_viaje = $producto['fecha_viaje'];
-            $modelo->hora_inicio_viaje = $producto['hora_viaje'];
-            $modelo->inicio_ruta = $producto['inicio_ruta'];
-            $modelo->destino_ruta = $producto['destino_ruta'];
-            $modelo->distancia = $producto['distancia'];
-            $modelo->precio = $producto['precio'];
-            $modelo->status_active = $producto['status_active'];
-            $modelo->allow_desvios = $producto['allow_desvios'];
-            $modelo->estimacion_llegada = $producto['estimacion_hora_llegada'];
-            // Sin el Save No hacemos Nada en la DB:
-            $modelo->save();
-        }
+    private static function seedBlablacars() {
+        // Empty Table:
+        Blablacar::truncate();
+        // Instanciacion del Model:
+        $blablacar = new Blablacar();
+        // FIll Data:
+        $blablacar->customer_id = '1';
+        $blablacar->vehiculo_id = '1';
+        $blablacar->titulo = 'Viaje a Valencia';
+        $blablacar->descripcion = 'Se Ruega Ser Puntuales!';
+        $blablacar->fecha_inicio_viaje = '2023-02-18';
+        $blablacar->hora_inicio_viaje = '07:00:00';
+        $blablacar->inicio_ruta = 'Balsapintada, Murcia';
+        $blablacar->destino_ruta = 'Valencia Centro';
+        $blablacar->distancia = 254;
+        $blablacar->estimacion_duracion = '02:34:00';
+        $blablacar->precio_combustible = 1.6;
+        // Datos Calculados:
+        $car = Vehiculo::findOrFail($blablacar->vehiculo_id);
+        $blablacar->plazas_disponibles = $car->plazas - 2;
+        $blablacar->precio = (($car->consumo_medio * $blablacar->distancia / 100) * $blablacar->precio_combustible) / ($car->plazas - $blablacar->plazas_disponibles);
+        // Save Into DataBase:
+        $blablacar->save();
     }
-    // -------------------------- Default Test Data:
-    private static $array_productos = [
-        // Key, en el ForEach sera = 0, 1, 2 .. Posicion de Arrays Dentro del Array
-        [
-            'postID' => 0,
-            'userID' => 'denis17',
-            'titulo' => 'Viaje a Madrid',
-            'descripcion' => 'Ser Puntuales!',
-            'fecha_viaje' => '2022-12-17',
-            'hora_viaje' => '23:36:56',
-            'inicio_ruta' => 'Carlos III, Cartagena',
-            'destino_ruta' => 'Madrid, Warner Bross',
-            'plazas' => 3,
-            'precio' => 0.00,
-            'status_active' => false,
-            'allow_desvios' => false,
-            'estimacion_hora_llegada' => '2022-12-18 22:36:56.000000',
-            'distancia' => 0.00,
-            'email' => 'devengvengg@gmail.com',
-            'tfn' => '662 468 091'
-        ]
-    ];
 }
