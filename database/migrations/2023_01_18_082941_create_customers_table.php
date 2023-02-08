@@ -19,7 +19,7 @@ class CreateCustomersTable extends Migration
             $table->string('last_name', 50)->nullable();
             $table->string('city')->nullable();
             $table->string('country')->default('Spain');
-            $table->string('telefono', 12);
+            $table->string('telefono', 15);
             $table->date('fecha_nacimiento')->nullable();
             $table->string('dni', 9)->unique();
             $table->timestamps();

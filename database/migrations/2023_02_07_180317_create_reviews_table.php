@@ -22,7 +22,7 @@ class CreateReviewsTable extends Migration {
             $table->foreign('user_id')->references('id')->on('customers');
             $table->foreign('user_id_reviwed')->references('id')->on('customers');
             // Primary Key:
-            $table->primary('user_id', 'user_id_reviwed');
+            $table->primary(['user_id', 'user_id_reviwed']);
         });
     }
 

@@ -14,9 +14,12 @@ class CustomerFactory extends Factory {
         return [
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
-            'job_title' => $this->faker->word(),
+            // 'job_title' => $this->faker->word(),
             'city' => $this->faker->city(),
-            'country' => $this->faker->country()
+            'country' => $this->faker->country(),
+            'telefono' => $this->faker->phoneNumber(),
+            'fecha_nacimiento' => $this->faker->date(),
+            'dni' => $this->faker->numerify()
         ];
     }
 }
