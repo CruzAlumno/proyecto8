@@ -21,7 +21,7 @@ class CreateBlablacarRecurridoTable extends Migration
             $table->foreign('user_id')->references('id')->on('customers');
             $table->foreign('post_id')->references('id')->on('blablacars');
             // Primary Key:
-            $table->primary('user_id', 'post_id');
+            $table->primary(['user_id', 'post_id']);
         });
     }
 

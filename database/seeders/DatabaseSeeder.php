@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 use Illuminate\Database\Seeder;
+// Import DB Query Builder:
+use Illuminate\Support\Facades\DB;
 // Import Dependencias para la FK:
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
@@ -11,7 +13,6 @@ use App\Models\Customer;
 use App\Models\Role;
 use App\Models\Blablacar;
 use App\Models\Vehiculo;
-
 
 class DatabaseSeeder extends Seeder {
     /**
@@ -24,11 +25,9 @@ class DatabaseSeeder extends Seeder {
         Model::unguard();
         Schema::disableForeignKeyConstraints();
         // Invocar Seeds:
-        self::seedAdministrador();
-        self::seedCustomers();
+        self::seedData();
         self::seedVehiculos();
         self::seedBlablacars();
-        self::seedRoles();
         // MSG:
         $this->command->info('Tabla inicializada con datos correctamente!');
         // Reguard:
@@ -39,41 +38,41 @@ class DatabaseSeeder extends Seeder {
         // \App\Models\User::factory(10)->create();
     }
     // Seeders Para las Migraciones:
-    private static function seedAdministrador() {
-        // Empty Table:
+    private static function seedData() {
+        // Empty Tables:
         User::truncate();
-        // Instanciacion del Model:
-        $user_admin = new User();
-        // Fill Data -- From '.env' o el Valor por Defecto especificado:
-        $user_admin->name = env('ADMIN_NAME', 'admin');
-        $user_admin->email = env('ADMIN_EMAIL', 'devengvengg@gmail.com');
-        $user_admin->password = bcrypt(env('ADMIN_PASSWORD', 'Alumno17'));
-        // Save Data Object into DB:
-        $user_admin->save();
-    }
-    private static function seedRoles() {
-        // Empty Table:
+        DB::table('reviews')->truncate();
         Role::truncate();
-        // Fill Data:  (Creacion Directa)
-        Role::create(['name' => 'Administrador']);
-        Role::create(['name' => 'User']);
-    }
-    private static function seedCustomers() {
-        // Empty Table::
+        DB::table('role_user')->truncate();
         Customer::truncate();
-        // Instanciacion del Model:
-        $customer = new Customer();
-        // Fill Data:
-        $customer->user_id = '1';
-        $customer->first_name = 'Denis';
-        $customer->last_name = 'Catruna';
-        $customer->city = 'Murcia';
-        $customer->country = 'Spain';
-        $customer->telefono = '662468091';
-        $customer->fecha_nacimiento = '2000-02-17';
-        $customer->dni = 'XXXXXXXXX';
-        // Save Into DataBase:
-        $customer->save();
+        // Roles:
+        $role_admin = Role::create(['name' => 'Administrador']);
+        $role_customer = Role::create(['name' => 'Customer']);
+        // Admin:
+        $user_admin = User::create([
+            'name' => env('ADMIN_NAME', 'admin'),
+            'email' => env('ADMIN_EMAIL', 'devengvengg@gmail.com'),
+            'password' => bcrypt(env('ADMIN_PASSWORD', 'Alumno17')),
+            'email_verified_at' => now()
+        ]);
+        // User:
+        $users = User::factory(10)->has(Customer::factory())->create();
+        // Customers:
+        $customer = Customer::create([
+            'user_id' => '1',
+            'first_name' => 'Denis',
+            'last_name' => 'Catruna',
+            'city' => 'Murcia',
+            'country' => 'Spain',
+            'telefono' => '662468091',
+            'fecha_nacimiento' => '2000-02-17',
+            'dni' => 'XXXXXXXXX'
+        ]);
+        // Roles Attach:
+        $user_admin->roles()->attach($role_admin->id);
+        foreach($users as $user_customer) {
+            $user_customer->roles()->attach($role_customer->id);
+        }
     }
     private static function seedVehiculos() {
         // Empty Table:
@@ -96,6 +95,7 @@ class DatabaseSeeder extends Seeder {
     private static function seedBlablacars() {
         // Empty Table:
         Blablacar::truncate();
+        DB::table('blablacar_recurrido')->truncate();
         // Instanciacion del Model:
         $blablacar = new Blablacar();
         // FIll Data:
