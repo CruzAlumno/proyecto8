@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Resources;
+
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BlablacarResource extends JsonResource {
+class VehiculoResource extends JsonResource
+{
     /**
      * Transform the resource into an array.
      *

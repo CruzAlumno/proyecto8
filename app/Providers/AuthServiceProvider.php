@@ -1,12 +1,17 @@
 <?php
 
 namespace App\Providers;
+
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 // Imports Necesarios:
 use Illuminate\Support\Facades\Gate;
 use App\Models\Customer;
+use App\Models\Vehiculo;
+use App\Models\Blablacar;
 use App\Policies\CustomerPolicy;
+use App\Policies\VehiculoPolicy;
+use App\Policies\BlablacarPolicy;
 
 
 class AuthServiceProvider extends ServiceProvider {
@@ -18,6 +23,8 @@ class AuthServiceProvider extends ServiceProvider {
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
         Customer::class => CustomerPolicy::class,
+        Vehiculo::class => VehiculoPolicy::class,
+        Blablacar::class => BlablacarPolicy::class,
     ];
     /**
      * Register any authentication / authorization services.

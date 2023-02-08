@@ -6,14 +6,13 @@ use Illuminate\Support\Facades\Route;
 use Psr\Http\Message\ServerRequestInterface;
 use Tqdev\PhpCrudApi\Api;
 use Tqdev\PhpCrudApi\Config\Config;
-// Import Customer Controller:
+// Import Controllers:
 use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\UserController;
-// Import API Externa Controller:
 use App\Http\Controllers\API\EcomapController;
-// Import Token Controller:
 use App\Http\Controllers\API\TokenController;
-
+use App\Http\Controllers\API\VehiculoController;
+use App\Http\Controllers\API\BlablacarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,9 +28,11 @@ use App\Http\Controllers\API\TokenController;
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
-// --------------------- Customers API Dependencies + Autorization Gates / Policies:
-Route::apiResource('customers', CustomerController::class)->middleware('auth:sanctum');
+// --------------------- API Dependencies + Autorization Gates / Policies:
 Route::apiResource('users', UserController::class);
+Route::apiResource('customers', CustomerController::class)->middleware('auth:sanctum');
+Route::apiResource('vehiculos', VehiculoController::class)->middleware('auth:sanctum');
+Route::apiResource('blablacars', BlablacarController::class)->middleware('auth:sanctum');
 // --------------------- API Externa Here Maps:
 Route::get('ecomaps', [EcomapController::class, 'index']);
 // --------------------- Auth Token Dependencies:
