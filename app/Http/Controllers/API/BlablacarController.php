@@ -25,6 +25,13 @@ class BlablacarController extends Controller {
         $busqueda_keys = ['customer_id', 'titulo', 'fecha_inicio_viaje', 'inicio_ruta', 'destino_ruta'];
         $registros = searchByField($busqueda_keys, Blablacar::class);
         return BlablacarResource::collection($registros->paginate($num_elementos));
+
+        // Mostrar Solo Sus Blablacars:
+        // $user = $request->user();
+        // $registros = ($user->isAdmin())
+        //     ? Blablacar::all()
+        //     : $user->customer->blablacars;
+        // return BlablacarResource::collection($registros);
     }
     /**
      * Store a newly created resource in storage.
