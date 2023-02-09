@@ -13,6 +13,7 @@ use App\Http\Controllers\API\EcomapController;
 use App\Http\Controllers\API\TokenController;
 use App\Http\Controllers\API\VehiculoController;
 use App\Http\Controllers\API\BlablacarController;
+use App\Http\Controllers\API\AvatarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,10 @@ Route::apiResource('users', UserController::class);
 Route::apiResource('customers', CustomerController::class)->middleware('auth:sanctum');
 Route::apiResource('vehiculos', VehiculoController::class)->middleware('auth:sanctum');
 Route::apiResource('blablacars', BlablacarController::class)->middleware('auth:sanctum');
+// --------------------- Avatar Controller:
+Route::post('/avatars', [AvatarController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/avatars', [AvatarController::class, 'getAvatar'])->middleware('auth:sanctum');
+Route::get('/avatars/{user_id}', [AvatarController::class, 'getUserAvatar']);
 // --------------------- API Externa Here Maps:
 Route::get('ecomaps', [EcomapController::class, 'index']);
 // --------------------- Auth Token Dependencies:

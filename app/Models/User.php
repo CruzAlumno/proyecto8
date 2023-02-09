@@ -49,4 +49,12 @@ class User extends Authenticatable {
     public function roles() {
         return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
+    public function isAdmin() {
+        $roles = $this->roles;
+        $is_admin = false;
+        foreach($roles as $role) {
+            if ($role->name === 'Administrador') $is_admin = true;
+        }
+        return $is_admin;
+    }
 }
