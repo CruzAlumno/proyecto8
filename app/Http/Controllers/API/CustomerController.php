@@ -33,6 +33,14 @@ class CustomerController extends Controller {
         $registros = searchByField($busqueda_keys, Customer::class);
         return CustomerResource::collection($registros->paginate($num_elementos));
         //return CustomerResource::collection(Customer::paginate());
+
+        /*// Show Only The Current User Profile:
+        $user = $request->user();
+        if($user->isAdmin()) {
+            return CustomerResource::collection(Customer::all());
+        } else {
+            return CustomerResource::collection([$user->customer]);
+        }*/
     }
     /**
      * Store a newly created resource in storage.
