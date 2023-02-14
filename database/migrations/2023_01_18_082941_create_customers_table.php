@@ -16,7 +16,7 @@ class CreateCustomersTable extends Migration
             // Data:
             $table->unsignedBigInteger('user_id');
             $table->string('first_name', 50);
-            $table->string('last_name', 50)->nullable();
+            $table->string('last_name', 50);
             $table->string('city')->nullable();
             $table->string('country')->default('Spain');
             $table->string('telefono', 15);

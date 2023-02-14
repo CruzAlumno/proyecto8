@@ -31,7 +31,8 @@ class CustomerResource extends JsonResource {
                 'fecha_nacimiento' => $this->fecha_nacimiento,
                 'dni' => $this->dni,
                 'user' => new UserResource($this->user),
-                'blablacars' => BlablacarResource::collection($this->blablacars)
+                'blablacars' => BlablacarResource::collection($this->blablacars),
+                'vehiculos' => VehiculoResource::collection($this->vehiculos),
             ]
         ];
     }

@@ -18,4 +18,8 @@ class Vehiculo extends Model {
         'matricula',
         'id'
     ];
+    // Relacion N:1 Con Customer:
+    public function vehiculo() {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
 }

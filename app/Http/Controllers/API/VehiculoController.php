@@ -22,12 +22,19 @@ class VehiculoController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
-        // Paginacion Controlada por Middleware:
+        /*// Paginacion Controlada por Middleware:
         $num_elementos = $request->input('numElements');
         // SEARCH BAR:  (La 'q' es porque lo inidicamos asi en el Cliente) + Helper
         $busqueda_keys = ['customer_id', 'combustible', 'fecha_matriculacion', 'modelo', 'potencia_cv', 'plazas', 'puertas', 'consumo_medio', 'matricula'];
         $registros = searchByField($busqueda_keys, Vehiculo::class);
-        return VehiculoResource::collection($registros->paginate($num_elementos));
+        return VehiculoResource::collection($registros->paginate($num_elementos));*/
+
+        // Show Only The User Cars:
+        $user = $request->user();
+        $registros = ($user->isAdmin())
+            ? Vehiculo::all()
+            : $user->customer->vehiculos;
+        return VehiculoResource::collection($registros);
     }
     /**
      * Store a newly created resource in storage.

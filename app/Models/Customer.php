@@ -31,4 +31,8 @@ class Customer extends Model {
     public function blablacars() {
         return $this->hasMany(Blablacar::class, 'customer_id');
     }
+    // Relacion con Vehiculos 1:N
+    public function vehiculos() {
+        return $this->hasMany(Vehiculo::class, 'customer_id');
+    }
 }
