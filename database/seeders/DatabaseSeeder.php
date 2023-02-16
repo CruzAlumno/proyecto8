@@ -55,8 +55,6 @@ class DatabaseSeeder extends Seeder {
             'password' => bcrypt(env('ADMIN_PASSWORD', 'Alumno17')),
             'email_verified_at' => now()
         ]);
-        // User:
-        $users = User::factory(10)->has(Customer::factory())->create();
         // Customers:
         $customer = Customer::create([
             'user_id' => '1',
@@ -68,6 +66,8 @@ class DatabaseSeeder extends Seeder {
             'fecha_nacimiento' => '2000-02-17',
             'dni' => 'XXXXXXXXX'
         ]);
+        // User:
+        $users = User::factory(10)->has(Customer::factory())->create();
         // Roles Attach:
         $user_admin->roles()->attach($role_admin->id);
         foreach($users as $user_customer) {

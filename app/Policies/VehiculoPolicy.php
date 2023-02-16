@@ -30,7 +30,8 @@ class VehiculoPolicy {
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function view(User $user, Vehiculo $vehiculo) {
-        return $user->id === $vehiculo->customer_id;
+        //return $user->id === $vehiculo->customer_id;
+        return true;
     }
     /**
      * Determine whether the user can create models.
@@ -39,7 +40,8 @@ class VehiculoPolicy {
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function create(User $user) {
-        return $user->id === 1;
+        //return $user->id === 1;
+        return true;
     }
     /**
      * Determine whether the user can update the model.
@@ -59,7 +61,7 @@ class VehiculoPolicy {
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(User $user, Vehiculo $vehiculo) {
-        //
+        return $user->id === $vehiculo->customer_id;
     }
     /**
      * Determine whether the user can restore the model.

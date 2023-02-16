@@ -48,7 +48,8 @@ class CustomerPolicy {
      */
     public function create(User $user) {
         // Unicamente el Admin Podra Crear Registros (Usuario id 1)
-        return $user->id === 1;
+        //return $user->id === 1;
+        return true;
     }
     /**
      * Determine whether the user can update the model.
@@ -69,7 +70,7 @@ class CustomerPolicy {
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(User $user, Customer $customer) {
-        //
+        return $user->id === $customer->user_id;
     }
     /**
      * Determine whether the user can restore the model.

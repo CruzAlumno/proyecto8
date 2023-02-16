@@ -18,15 +18,15 @@ class CreateBlablacarsTable extends Migration
             $table->unsignedBigInteger('vehiculo_id');
             $table->string('titulo', 24);
             $table->string('descripcion', 224)->nullable();
-            $table->string('fecha_inicio_viaje', 10);
-            $table->time('hora_inicio_viaje');
+            $table->date('fecha_inicio_viaje', 10);
+            $table->string('hora_inicio_viaje');
             $table->string('inicio_ruta', 64);
             $table->string('destino_ruta', 64);
             $table->integer('distancia');
             $table->float('precio', 6);
             $table->float('precio_combustible', 4);
             $table->integer('plazas_disponibles');
-            $table->time('estimacion_duracion')->nullable();
+            $table->string('estimacion_duracion')->nullable();
             $table->boolean('status_active')->default(true);
             $table->timestamps();
             // Foreign Key:

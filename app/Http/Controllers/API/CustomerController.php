@@ -26,21 +26,17 @@ class CustomerController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
-        // Paginacion Controlada por Middleware:
-        $num_elementos = $request->input('numElements');
-        // SEARCH BAR:  (La 'q' es porque lo inidicamos asi en el Cliente) + Helper
+        // SEARCH BAR:
+        /*$num_elementos = $request->input('numElements');
         $busqueda_keys = ['first_name', 'last_name', 'city', 'country', 'fecha_nacimiento'];
         $registros = searchByField($busqueda_keys, Customer::class);
-        return CustomerResource::collection($registros->paginate($num_elementos));
-        //return CustomerResource::collection(Customer::paginate());
-
-        /*// Show Only The Current User Profile:
+        return CustomerResource::collection($registros->paginate($num_elementos));*/
+        // Show Only The Current User Profile:
         $user = $request->user();
-        if($user->isAdmin()) {
-            return CustomerResource::collection(Customer::all());
-        } else {
-            return CustomerResource::collection([$user->customer]);
-        }*/
+        $registros = ($user->isAdmin())
+            ? CustomerResource::collection(Customer::all())
+            : CustomerResource::collection([($user->customer) ? $user->customer : Customer::find(1)]);
+        return $registros;
     }
     /**
      * Store a newly created resource in storage.

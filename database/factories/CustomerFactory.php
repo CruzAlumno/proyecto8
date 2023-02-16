@@ -19,7 +19,7 @@ class CustomerFactory extends Factory {
             'country' => $this->faker->country(),
             'telefono' => $this->faker->phoneNumber(),
             'fecha_nacimiento' => $this->faker->date(),
-            'dni' => $this->faker->numerify()
+            'dni' => $this->faker->numberBetween(10000000, 99999999)
         ];
     }
 }
