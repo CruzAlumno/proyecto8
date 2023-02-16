@@ -32,7 +32,8 @@ class BlablacarPolicy {
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function view(User $user, Blablacar $blablacar) {
-        return $user->id === $blablacar->customer_id;
+        //return $user->id === $blablacar->customer_id;
+        return true;
     }
 
     /**
@@ -42,7 +43,8 @@ class BlablacarPolicy {
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function create(User $user) {
-        return $user->id === 1;
+        //return $user->id === 1;
+        return true;
     }
 
     /**
@@ -54,6 +56,7 @@ class BlablacarPolicy {
      */
     public function update(User $user, Blablacar $blablacar) {
         return $user->id === $blablacar->customer_id;
+        //return true;
     }
 
     /**
@@ -63,9 +66,8 @@ class BlablacarPolicy {
      * @param  \App\Models\Blablacar  $blablacar
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Blablacar $blablacar)
-    {
-        //
+    public function delete(User $user, Blablacar $blablacar) {
+        return $user->id === $blablacar->customer_id;
     }
 
     /**
