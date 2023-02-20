@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductosController;
 use Illuminate\Support\Facades\Auth;
+// Mail Sending:
+use App\Http\Controllers\Mail\MailController;
 
 // ------------------------------------- @ My Routes:
 
@@ -31,7 +33,10 @@ Route::prefix('productos')->group(function() {
         Route::put('/edit/{id}', [ProductosController::class, 'postEdit']);
     });
 });
-
+// -------------------- Mail Test Server: http://proyecto8.test/send/X
+Route::get('/send/notificacion', [MailController::class, 'sendNotification']);
+Route::get('/send/notificacion/to/{email}/{subject}', [MailController::class, 'sendNotificationTo']);
+Route::get('/send/message/{email}/{subject}/{data}', [MailController::class, 'sendMailTo']);
 // -------------------- API Dependencies:
 Route::get('/', function () {
     return ['Laravel' => app()->version()];
