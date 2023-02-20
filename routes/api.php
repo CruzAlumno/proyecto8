@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Psr\Http\Message\ServerRequestInterface;
 use Tqdev\PhpCrudApi\Api;
 use Tqdev\PhpCrudApi\Config\Config;
-// Import Controllers:
+// Import API Controllers:
 use App\Http\Controllers\API\CustomerController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\EcomapController;
@@ -14,7 +14,8 @@ use App\Http\Controllers\API\TokenController;
 use App\Http\Controllers\API\VehiculoController;
 use App\Http\Controllers\API\BlablacarController;
 use App\Http\Controllers\API\AvatarController;
-
+// Mails Controller:
+use App\Http\Controllers\Mail\MailController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,6 +41,10 @@ Route::get('/avatars', [AvatarController::class, 'getAvatar'])->middleware('auth
 Route::get('/avatars/{user_id}', [AvatarController::class, 'getUserAvatar']);
 // --------------------- API Externa Here Maps:
 Route::get('ecomaps', [EcomapController::class, 'index']);
+// --------------------- Sending Mails:
+Route::get('/send/notificacion', [MailController::class, 'sendNotification'])->middleware('auth:sanctum');
+Route::post('/send/notificacion/to/{email}/{subject}', [MailController::class, 'sendNotificationTo'])->middleware('auth:sanctum');
+Route::post('/send/message/{email}/{subject}/{data}', [MailController::class, 'sendMailTo'])->middleware('auth:sanctum');
 // --------------------- Auth Token Dependencies:
 // emite un nuevo token
 Route::post('tokens', [TokenController::class, 'store']);
