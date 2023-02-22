@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Mail\MailController;
 
 // ------------------------------------- @ My Routes:
-
 Route::get('/home', [HomeController::class, 'getHome']);
 Route::prefix('productos')->group(function() {
     // Se Acceden con el Prefijo  '/productos/...'
@@ -37,6 +36,13 @@ Route::prefix('productos')->group(function() {
 Route::get('/send/notificacion', [MailController::class, 'sendNotification']);
 Route::get('/send/notificacion/to/{email}/{subject}', [MailController::class, 'sendNotificationTo']);
 Route::get('/send/message/{email}/{subject}/{data}', [MailController::class, 'sendMailTo']);
+// -------------------- TEST STRIPE PAYMENT: http://proyecto8.test/payments
+Route::get('/payments', 'App\Http\Controllers\StripeController@index')->name('index');
+Route::post('/payments/checkout', 'App\Http\Controllers\StripeController@checkout')->name('checkout');
+Route::get('/payments/success', 'App\Http\Controllers\StripeController@success')->name('success');
+// -------------------- Cashier Test: http://proyecto8.test/cashier
+Route::get('/cashier', 'App\Http\Controllers\CashierController@index')->name('index');
+Route::post('single-charge', 'App\Http\Controllers\CashierController@singleCharge')->name('single.charge');
 // -------------------- API Dependencies:
 Route::get('/', function () {
     return ['Laravel' => app()->version()];
