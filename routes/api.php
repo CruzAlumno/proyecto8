@@ -35,7 +35,7 @@ Route::apiResource('users', UserController::class);
 Route::apiResource('customers', CustomerController::class)->middleware('auth:sanctum');
 Route::apiResource('vehiculos', VehiculoController::class)->middleware('auth:sanctum');
 Route::apiResource('blablacars', BlablacarController::class)->middleware('auth:sanctum');
-// --------------------- Avatar Controller:
+// --------------------- Avatar Controller: api/avatars
 Route::post('/avatars', [AvatarController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/avatars', [AvatarController::class, 'getAvatar'])->middleware('auth:sanctum');
 Route::get('/avatars/{user_id}', [AvatarController::class, 'getUserAvatar']);
@@ -45,6 +45,13 @@ Route::get('ecomaps', [EcomapController::class, 'index']);
 Route::get('/send/notificacion', [MailController::class, 'sendNotification'])->middleware('auth:sanctum');
 Route::post('/send/notificacion/to/{email}/{subject}', [MailController::class, 'sendNotificationTo'])->middleware('auth:sanctum');
 Route::post('/send/message/{email}/{subject}/{data}', [MailController::class, 'sendMailTo'])->middleware('auth:sanctum');
+// ---------------------- Stripe Payment:
+Route::get('/payments', 'App\Http\Controllers\StripeController@index')->name('index')->middleware('auth:sanctum');
+Route::post('/payments/checkout', 'App\Http\Controllers\StripeController@checkout')->name('checkout')->middleware('auth:sanctum');
+Route::get('/payments/success', 'App\Http\Controllers\StripeController@success')->name('success')->middleware('auth:sanctum');
+// --------------------- Cashier:
+Route::get('/cashier', 'App\Http\Controllers\CashierController@index')->name('index')->middleware('auth:sanctum');
+Route::post('single-charge', 'App\Http\Controllers\CashierController@singleCharge')->name('single.charge')->middleware('auth:sanctum');
 // --------------------- Auth Token Dependencies:
 // emite un nuevo token
 Route::post('tokens', [TokenController::class, 'store']);
