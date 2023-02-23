@@ -29,7 +29,7 @@ class VehiculoController extends Controller {
         $registros = searchByField($busqueda_keys, Vehiculo::class);
         return VehiculoResource::collection($registros->paginate($num_elementos));*/
 
-        // Show Only The User Cars:
+        // Show Only The User Cars: // : ($user->isCustomer()) ? $user->customer->vehiculos : [];
         $user = $request->user();
         $registros = ($user->isAdmin())
             ? Vehiculo::all()

@@ -51,6 +51,7 @@ class User extends Authenticatable {
     public function roles() {
         return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
     }
+    // ROLES:
     public function isAdmin() {
         $roles = $this->roles;
         $is_admin = false;
@@ -58,5 +59,21 @@ class User extends Authenticatable {
             if ($role->name === 'Administrador') $is_admin = true;
         }
         return $is_admin;
+    }
+    public function isUser() {
+        $roles = $this->roles;
+        $is_user = false;
+        foreach($roles as $role) {
+            if ($role->name === 'User') $is_user = true;
+        }
+        return $is_user;
+    }
+    public function isCustomer() {
+        $roles = $this->roles;
+        $is_customer = false;
+        foreach($roles as $role) {
+            if ($role->name === 'Customer') $is_customer = true;
+        }
+        return $is_customer;
     }
 }

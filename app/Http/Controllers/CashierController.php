@@ -9,7 +9,7 @@ class CashierController extends Controller {
     public function __construct() {
         //$this->middleware('auth');
     }
-    // Funcionalidades:
+    // Funcionalidades:  NOTA Updatear a API... (Falta Tiempo ToDo)  $user = $request->user();
     public function index() {
         //$user = auth()->user();   ToDo --> Usar el Auth Token, Lo Hago aqui para probarlo primero.
         $user = User::find(1);
