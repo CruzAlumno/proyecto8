@@ -38,8 +38,8 @@
         <header class="container text-center mt-5">
             <h1>Cashier Payment</h1>
         </header>
-        <!-- Stripe FORM -->
-        <div class="container w-50 p-4 bg-light rounded shadow">
+        <!-- Stripe FORM  ¿Integrar en React? -->
+        <div class="container w-50 p-4 bg-light rounded shadow border border-light">
             <form action="{{ route('single.charge') }}" method="POST" id="subscribe-form">
                 <input placeholder="Card Holder Name" id="card-holder-name" type="text" class="form-control w-50 mb-2">
                 <input placeholder="amount" type="number" name="amount" id="amount" class="form-control w-25 mb-2"/>
